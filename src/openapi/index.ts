@@ -11,7 +11,7 @@ import {IOpenApiExternalDocs} from "./external-docs";
 import {IOpenApiSchema} from "./schema";
 
 export interface IOpenApiV3 {
-  version: "3.0";
+  openapi: "3.0";
   info: IOpenApiInfo;
   servers?: IOpenApiServer[];
   paths: Record<string, IOpenApiPath>;

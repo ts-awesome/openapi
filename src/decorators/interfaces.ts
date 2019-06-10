@@ -94,6 +94,7 @@ export interface IOpenApiPathArgs {
   summary?: string;
   description?: string;
   parameters?: IOpenApiParameterArgs[];
+  security?: IOpenApiSecuritySettings;
 }
 
 export interface IOpenApiModelPropertyArgs extends Omit<IOpenApiTypeArgs, 'type'|'items'> {

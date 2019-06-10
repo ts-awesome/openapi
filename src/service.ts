@@ -6,7 +6,7 @@ import {
 } from "./decorators/interfaces";
 import {IOpenApiV3} from "./openapi";
 import {IOpenApiInfo} from "./openapi/info";
-import {OpenApiSecuritySchemaType} from "./openapi/security-schema";
+import {IOpenApiSecuritySettings, OpenApiSecuritySchemaType} from "./openapi/security-schema";
 import {IOpenApiExternalDocs} from "./openapi/external-docs";
 import {IOpenApiSchema, OpenApiDataType} from "./openapi/schema";
 import {IOpenApiReference} from "./openapi/reference";
@@ -132,13 +132,18 @@ function buildParameters(params: Partial<Record<keyof typeof OpenApiParameterLoc
     .reduce((p, c) => [...p, ...c], []);
 }
 
-function buildOperation(operationId: string, {responses, request, ...def}: Omit<IOpenApiOperationArgs, 'path'|'kind'>): IOpenApiOperation {
+function buildOperation(
+  operationId: string,
+  defSecurity: IOpenApiSecuritySettings,
+  {responses, request, security, ...def}: Omit<IOpenApiOperationArgs, 'path'|'kind'>
+): IOpenApiOperation {
 
   const {body = undefined, ...parameters} = request || {};
 
   return {
     operationId,
     ...def,
+    security: security || defSecurity,
     parameters: parameters ? buildParameters(parameters) : undefined,
     requestBody: body ? buildBody(body) : undefined,
     responses: buildObj(
@@ -179,11 +184,11 @@ function buildPaths(
               }
             });
 
-
+          const {security, ...base} = paths[pathKey];
           const value: IOpenApiPath = {
-            ...paths[pathKey],
+            ...base,
             ...buildObj(
-              defs.map(({kind, ...def}) => [kind, buildOperation(sha1(`${path}::${kind}`), def)]),
+              defs.map(({kind, ...def}) => [kind, buildOperation(sha1(`${path}::${kind}`), security, def)]),
             ),
           };
 
@@ -207,7 +212,7 @@ class OpenApiServiceImpl {
     const {schemas = {}} = components || {};
 
     return {
-      version: "3.0",
+      openapi: "3.0",
       ...def,
       components: {
         ...components,
