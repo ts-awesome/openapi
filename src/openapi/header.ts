@@ -1,4 +1,4 @@
-import {OpenApiOperationParameterStyle} from "./parameter";
+import {OpenApiOperationParameterStyle} from "./enums";
 import {IOpenApiSchema} from "./schema";
 import {IOpenApiReference} from "./reference";
 

@@ -5,13 +5,16 @@ import {IOpenApiReference} from "./reference";
 import {IOpenApiParameter} from "./parameter";
 import {IOpenApiResponse} from "./response";
 import {IOpenApiRequestBody} from "./request-body";
-import {IOpenApiSecuritySchema, OpenApiSecuritySchemaType} from "./security-schema";
+import {IOpenApiSecurityScheme} from "./security-scheme";
 import {IOpenApiHeader} from "./header";
 import {IOpenApiExternalDocs} from "./external-docs";
 import {IOpenApiSchema} from "./schema";
+import {OpenApiSecuritySchemeType} from "./enums";
+
+export * from './enums';
 
 export interface IOpenApiV3 {
-  openapi: "3.0";
+  openapi: "3.0.0";
   info: IOpenApiInfo;
   servers?: IOpenApiServer[];
   paths: Record<string, IOpenApiPath>;
@@ -22,11 +25,11 @@ export interface IOpenApiV3 {
     // examples?: Record<string, IOpenApiExample | IOpenApiReference>;
     requestBodies?: Record<string, IOpenApiRequestBody | IOpenApiReference>;
     headers?: Record<string, IOpenApiHeader | IOpenApiReference>;
-    securitySchemes?: Record<string, IOpenApiSecuritySchema | IOpenApiReference>;
+    securitySchemes?: Record<string, IOpenApiSecurityScheme | IOpenApiReference>;
     // links?: Record<string, IOpenApiLink | IOpenApiReference>;
     callbacks?: Record<string, Record<string, IOpenApiPath> | IOpenApiReference>;
   };
-  security?: Partial<Record<keyof typeof OpenApiSecuritySchemaType, string[]>>;
+  security?: Partial<Record<keyof typeof OpenApiSecuritySchemeType, string[]>>;
   tags?: string[];
   externalDocs?: IOpenApiExternalDocs;
 }

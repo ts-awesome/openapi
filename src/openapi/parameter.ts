@@ -1,22 +1,6 @@
 import {IOpenApiReference} from "./reference";
 import {IOpenApiSchema} from "./schema";
-
-export const enum OpenApiParameterLocation {
-  query = 'query',
-  header = 'header',
-  path = 'path',
-  cookie = 'cookie',
-}
-
-export const enum OpenApiOperationParameterStyle {
-  matrix = 'matrix',
-  label = 'label',
-  form = 'form',
-  simple = 'simple',
-  spaceDelimited = 'spaceDelimited',
-  pipeDelimited = 'pipeDelemited',
-  deepObject = 'deepObject',
-}
+import {OpenApiOperationParameterStyle, OpenApiParameterLocation} from "./enums";
 
 export interface IOpenApiParameter {
   name: string;

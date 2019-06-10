@@ -1,28 +1,6 @@
 import {IOpenApiReference} from "./reference";
 import {IOpenApiExternalDocs} from "./external-docs";
-
-export const enum OpenApiDataFormat {
-  int32 = 'int32',
-  int64 = 'int64',
-  float = 'float',
-  double = 'double',
-  string = 'string',
-  byte = 'byte',
-  binary = 'binary',
-  boolean = 'boolean',
-  date = 'date',
-  'date-time' = 'date-time',
-  password = 'password',
-}
-
-export const enum OpenApiDataType {
-  string = 'string',
-  number = 'number',
-  integer = 'integer',
-  boolean = 'boolean',
-  object = 'object',
-  array = 'array',
-}
+import {OpenApiDataFormat, OpenApiDataType} from "./enums";
 
 export interface IOpenApiSchema {
   title?: string;

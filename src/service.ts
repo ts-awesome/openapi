@@ -4,18 +4,15 @@ import {
   IOpenApiPathArgs, IOpenApiRequestBodyArgs,
   IOpenApiSchemaArgs, OpenApiSchemaArgs
 } from "./decorators/interfaces";
-import {IOpenApiV3} from "./openapi";
-import {IOpenApiInfo} from "./openapi/info";
-import {IOpenApiSecuritySettings, OpenApiSecuritySchemaType} from "./openapi/security-schema";
-import {IOpenApiExternalDocs} from "./openapi/external-docs";
-import {IOpenApiSchema, OpenApiDataType} from "./openapi/schema";
+import {IOpenApiV3, OpenApiDataType, OpenApiParameterLocation, OpenApiResponseStatusCodes} from "./openapi";
+import {IOpenApiSecuritySettings} from "./openapi/security-scheme";
+import {IOpenApiSchema} from "./openapi/schema";
 import {IOpenApiReference} from "./openapi/reference";
 import {IOpenApiPath} from "./openapi/path";
 import {IOpenApiOperation} from "./openapi/operation";
 import sha1 = require("sha1");
-import {OpenApiResponseStatusCodes} from "./openapi/response";
 import {IOpenApiRequestBody} from "./openapi/request-body";
-import {IOpenApiParameter, OpenApiParameterLocation} from "./openapi/parameter";
+import {IOpenApiParameter} from "./openapi/parameter";
 
 function objectEntities<T = any>(obj: Record<string, T>): Array<[string, T]> {
   return Object.keys(obj).map(key => [key, obj[key]]);
@@ -135,7 +132,8 @@ function buildParameters(params: Partial<Record<keyof typeof OpenApiParameterLoc
 function buildOperation(
   operationId: string,
   defSecurity: IOpenApiSecuritySettings,
-  {responses, request, security, ...def}: Omit<IOpenApiOperationArgs, 'path'|'kind'>
+  tag: string | undefined,
+  {responses, request, security, tags = [], ...def}: Omit<IOpenApiOperationArgs, 'path'|'kind'>
 ): IOpenApiOperation {
 
   const {body = undefined, ...parameters} = request || {};
@@ -160,15 +158,16 @@ function buildOperation(
                 }])) : undefined,
             content: def!.content ? buildObj(
               objectEntities(convertToContent(def!.content))
-                .map(([key, def]) => [key, buildType(def)])) : undefined,
+                .map(([key, def]) => [key, {schema: buildType(def)}])) : undefined,
           }
         ])
-    )
+    ),
+    tags: [tag!, ...tags].filter(x => x),
   }
 }
 
 function buildPaths(
-  paths: Record<string, IOpenApiSchemaArgs>,
+  paths: Record<string, IOpenApiPathArgs>,
   operations: Record<string, Omit<IOpenApiOperationArgs, 'path'>[]>
 ): Record<string, IOpenApiPath> {
   return {
@@ -184,11 +183,19 @@ function buildPaths(
               }
             });
 
-          const {security, ...base} = paths[pathKey];
+          const {
+            security = [],
+            parameters = {},
+            tag = undefined,
+            ...base
+          } = paths[pathKey] || {};
+
           const value: IOpenApiPath = {
             ...base,
+            parameters: parameters ? buildParameters(parameters) : undefined,
             ...buildObj(
-              defs.map(({kind, ...def}) => [kind, buildOperation(sha1(`${path}::${kind}`), security, def)]),
+              defs.map(({kind, ...def}) =>
+                [kind, buildOperation(sha1(`${path}::${kind}`), security, tag, def)]),
             ),
           };
 
@@ -202,7 +209,7 @@ class OpenApiServiceImpl {
 
   private schemas: Record<string, IOpenApiSchemaArgs> = {};
   private properties: Record<string, Record<string, IOpenApiModelPropertyArgs>> = {};
-  private paths: Record<string, IOpenApiSchemaArgs> = {};
+  private paths: Record<string, IOpenApiPathArgs> = {};
   private operations: Record<string, Omit<IOpenApiOperationArgs, 'path'>[]> = {};
 
   public buildV3(
@@ -212,7 +219,7 @@ class OpenApiServiceImpl {
     const {schemas = {}} = components || {};
 
     return {
-      openapi: "3.0",
+      openapi: "3.0.0",
       ...def,
       components: {
         ...components,

@@ -5,7 +5,8 @@ import {IOpenApiRequestBody} from "./request-body";
 import {IOpenApiResponse} from "./response";
 import {IOpenApiPath} from "./path";
 import {IOpenApiServer} from "./server";
-import {OpenApiSecuritySchemaType} from "./security-schema";
+import {OpenApiSecuritySchemeType} from "./enums";
+import {IOpenApiSecuritySettings} from "./security-scheme";
 
 export interface IOpenApiOperation {
   tags?: string[];
@@ -18,6 +19,6 @@ export interface IOpenApiOperation {
   responses: Record<string, IOpenApiResponse | IOpenApiReference>;
   callbacks?: Record<string, Record<string, IOpenApiPath> | IOpenApiReference>;
   deprecated?: true;
-  security?: Partial<Record<keyof typeof OpenApiSecuritySchemaType, any[]>>;
+  security?: IOpenApiSecuritySettings;
   servers?: IOpenApiServer[];
 }

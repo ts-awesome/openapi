@@ -20,10 +20,12 @@ export function openApi(options: IOpenApiExpressOptions): Router {
   const {path = '/api-docs/openapi.json', info } = options;
   const {static: content} = require('express');
 
+  const swaggerUiAssetPath = require("swagger-ui-dist").getAbsoluteFSPath();
+
   return Router()
     .get(path, (_: any, response: Response) => response.json(OpenApiService.buildV3(info)))
     .use(path.replace(/\.json$/, '')
       , content(resolve(__dirname + '../../../../public')))
     .use(path.replace(/\.json$/, '/assets')
-      , content(require.resolve('swagger-ui-dist').replace('index.js', '')));
+      , content(swaggerUiAssetPath));
 }

@@ -1,11 +1,10 @@
-import {OpenApiDataType, OpenApiDataFormat} from "../openapi/schema";
+import {OpenApiDataType, OpenApiDataFormat, OpenApiParameterLocation, OpenApiOperationKind} from "../openapi";
 import {IOpenApiExternalDocs} from "../openapi/external-docs";
-import {IOpenApiParameter, OpenApiParameterLocation} from "../openapi/parameter";
+import {IOpenApiParameter, } from "../openapi/parameter";
 import {IOpenApiRequestBody} from "../openapi/request-body";
 import {IOpenApiHeader} from "../openapi/header";
-import {OpenApiOperationKind} from "../openapi/path";
 import {OpenApiResponseType} from "../openapi/response";
-import {IOpenApiSecuritySettings} from "../openapi/security-schema";
+import {IOpenApiSecuritySettings} from "../openapi/security-scheme";
 
 export interface IOpenApiTypeArgs {
   title?: string;
@@ -91,9 +90,10 @@ export interface IOpenApiSchemaArgs {
 
 export interface IOpenApiPathArgs {
   path: string;
+  tag: string;
   summary?: string;
   description?: string;
-  parameters?: IOpenApiParameterArgs[];
+  parameters?: Partial<Record<keyof typeof OpenApiParameterLocation, Record<string, IOpenApiParameterArgs>>>;
   security?: IOpenApiSecuritySettings;
 }
 

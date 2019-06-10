@@ -1,5 +1,5 @@
 import {IOpenApiOperationArgs} from "./interfaces";
-import {OpenApiOperationKind} from "../openapi/path";
+import {OpenApiOperationKind} from "../openapi";
 import {OpenApiService} from "../service";
 
 export function OpenApiOperation(args: IOpenApiOperationArgs): MethodDecorator {
