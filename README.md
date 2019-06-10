@@ -1,3 +1,3 @@
 # ts-openapi
 
-openapi wrapper to rs
+openapi wrapper for ts

@@ -1,0 +1,28 @@
+{
+  "name": "@viatsyshyn/ts-openapi",
+  "version": "0.0.0",
+  "description": "TypeScript OpenApi provider",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/sha1": "^1.1.2",
+    "express": "^4.17.1",
+    "swagger-ui-dist": "^3.22.3",
+    "typescript": "^3.5.1"
+  },
+  "peerDependencies": {
+    "express": "^4.17.1",
+    "swagger-ui-dist": "^3.22.3"
+  },
+  "author": "Volodymyr Iatsyshyn <viatsyshyn@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "sha1": "^1.1.1"
+  }
+}
