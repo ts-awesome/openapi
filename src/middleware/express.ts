@@ -13,7 +13,7 @@ export interface IOpenApiExpressOptions {
   /**
    * Swagger Definition.
    */
-  info: Pick<IOpenApiV3, 'info' | 'security' | 'externalDocs'>;
+  info: Pick<IOpenApiV3, 'info' | 'security' | 'externalDocs' | 'tags' | 'components'>;
 }
 
 export function openApi(options: IOpenApiExpressOptions): Router {

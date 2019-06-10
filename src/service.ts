@@ -201,17 +201,22 @@ class OpenApiServiceImpl {
   private operations: Record<string, Omit<IOpenApiOperationArgs, 'path'>[]> = {};
 
   public buildV3(
-    {info, security, externalDocs}: Pick<IOpenApiV3, 'info' | 'security' | 'externalDocs'>,
+    data: Pick<IOpenApiV3, 'info' | 'security' | 'externalDocs' | 'tags' | 'components'>,
   ): IOpenApiV3 {
+    const {components, ...def} = data;
+    const {schemas = {}} = components || {};
+
     return {
       version: "3.0",
-      info,
-      paths: buildPaths(this.paths, this.operations),
+      ...def,
       components: {
-        schemas: buildSchemas(this.schemas, this.properties)
+        ...components,
+        schemas: {
+          ...schemas,
+          ...buildSchemas(this.schemas, this.properties),
+        }
       },
-      security,
-      externalDocs,
+      paths: buildPaths(this.paths, this.operations),
     };
   }
 
