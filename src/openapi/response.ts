@@ -8,6 +8,6 @@ export type OpenApiResponseType = 'default' | keyof typeof OpenApiResponseStatus
 export interface IOpenApiResponse {
   description?: string;
   headers?: Record<string, IOpenApiHeader | IOpenApiReference>;
-  content?: Partial<Record<OpenApiResponseType, {schema: IOpenApiSchema | IOpenApiReference}>>;
+  content?: Partial<Record<string, {schema: IOpenApiSchema | IOpenApiReference}>>;
   // links?: Record<string, IOpenApiLink | IOpenApiReference>;
 }

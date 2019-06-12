@@ -3,7 +3,7 @@ import {IOpenApiServer} from "./server";
 import {IOpenApiPath} from "./path";
 import {IOpenApiReference} from "./reference";
 import {IOpenApiParameter} from "./parameter";
-import {IOpenApiResponse} from "./response";
+import {IOpenApiResponse, OpenApiResponseType} from "./response";
 import {IOpenApiRequestBody} from "./request-body";
 import {IOpenApiSecurityScheme} from "./security-scheme";
 import {IOpenApiHeader} from "./header";
