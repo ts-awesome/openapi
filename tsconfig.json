@@ -13,10 +13,12 @@
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
     "strictNullChecks": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "demo"
   ]
 }

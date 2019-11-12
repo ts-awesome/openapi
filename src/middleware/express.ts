@@ -13,17 +13,17 @@ export interface IOpenApiExpressOptions {
   /**
    * Swagger Definition.
    */
-  info: Pick<IOpenApiV3, 'info' | 'security' | 'externalDocs' | 'tags' | 'components'>;
+  def: Pick<IOpenApiV3, 'info' | 'security' | 'externalDocs' | 'tags' | 'components'>;
 }
 
 export function openApi(options: IOpenApiExpressOptions): Router {
-  const {path = '/api-docs/openapi.json', info } = options;
+  const {path = '/api-docs/openapi.json', def } = options;
   const {static: content} = require('express');
 
   const swaggerUiAssetPath = require("swagger-ui-dist").getAbsoluteFSPath();
 
   return Router()
-    .get(path, (_: any, response: Response) => response.json(OpenApiService.buildV3(info)))
+    .get(path, (_: any, response: Response) => response.json(OpenApiService.buildV3(def)))
     .use(path.replace(/\.json$/, '')
       , content(resolve(__dirname + '../../../../public')))
     .use(path.replace(/\.json$/, '/assets')
