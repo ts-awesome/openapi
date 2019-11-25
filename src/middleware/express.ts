@@ -25,7 +25,7 @@ export function openApi(options: IOpenApiExpressOptions): Router {
   return Router()
     .get(path, (_: any, response: Response) => response.json(OpenApiService.buildV3(def)))
     .use(path.replace(/\.json$/, '')
-      , content(resolve(__dirname + '../../../../public')))
+      , content(resolve(__dirname + '../../../public')))
     .use(path.replace(/\.json$/, '/assets')
       , content(swaggerUiAssetPath));
 }
