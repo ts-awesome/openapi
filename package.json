@@ -1,5 +1,5 @@
 {
-  "name": "@viatsyshyn/ts-openapi",
+  "name": "@ts-awesome/openapi",
   "version": "0.0.0",
   "description": "TypeScript OpenApi provider",
   "main": "dist/index.js",
@@ -20,7 +20,7 @@
     "swagger-ui-dist": "^3.22.3"
   },
   "author": "Volodymyr Iatsyshyn <viatsyshyn@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "reflect-metadata": "^0.1.13",
     "sha1": "^1.1.1"
