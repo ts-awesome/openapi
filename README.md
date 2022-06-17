@@ -1,14 +1,12 @@
-# ts-openapi
+# @ts-awesome/openapi
 
-OpenApi provider and UI, build as an helper for `@viatsyshyn/ts-rest`
+[OpenApi](https://www.openapis.org/) provider and 
+[UI](https://github.com/swagger-api/swagger-ui). 
+Schema is collected from decorators.
 
-```bash
-npm install --save @viatsyshyn/ts-openapi
-#or
-yarn add @viatsyshyn/ts-openapi
-```
+Library is an extension for [@ts-awesome/rest](https://github.com/ts-awesome/rest)
 
-### `routes/param.definitions.ts`
+### Common params declarations
 
 ```ts
 export const SORT: IOpenApiParameterArgs = {
@@ -50,10 +48,9 @@ export const UID: IOpenApiParameterArgs = {
     format: 'uuid',
   }
 };
-
 ```
 
-### `routes/v1/device/get-device.route.ts`
+### Sample endpoint decorator 
 
 ```ts
 export class GetDeviceRoute {
@@ -81,10 +78,9 @@ export class GetDeviceRoute {
 }
 ```
 
-### `routes/v1/device/index.ts`
+### Declare endpoints group
 
 ```ts
-
 export * from './get-device.route';
 
 OpenApiPath({
@@ -95,7 +91,7 @@ OpenApiPath({
 
 ```
 
-### part of Application setup routine
+### Sample use with express
 
 ```ts
 app.use(openApi({
@@ -116,3 +112,8 @@ app.use(openApi({
     }
 }));
 ```
+
+# License
+May be freely distributed under the [MIT license](https://opensource.org/licenses/MIT).
+
+Copyright (c) 2022 Volodymyr Iatsyshyn and other contributors
