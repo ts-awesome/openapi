@@ -159,6 +159,7 @@ function buildOperation(
             content: def!.content ? buildObj(
               objectEntities(convertToContent(def!.content))
                 .map(([key, def]) => [key, {schema: buildType(def)}])) : undefined,
+            links: def!.links
           }
         ])
     ),
@@ -265,6 +266,8 @@ class OpenApiServiceImpl {
 
   public addOperation(key: string, {path, ...def}: IOpenApiOperationArgs): this {
     this.operations[path] = this.operations[path] || [];
+
+    def.operationId = def.operationId ?? key;
 
     this.operations[path] = [
       ...this.operations[path],

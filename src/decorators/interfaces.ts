@@ -61,10 +61,12 @@ export interface IOpenApiResponseArgs {
   description?: string;
   headers?: Record<string, IOpenApiHeaderArgs>;
   content?: Record<string, OpenApiSchemaArgs> | Function | [Function];
+  links?: IOpenApiLinks;
 }
 
 export interface IOpenApiOperationArgs {
   path: string;
+  operationId?: string;
   kind: OpenApiOperationKind | keyof typeof OpenApiOperationKind;
   tags?: string[];
   summary?: string;
@@ -86,6 +88,20 @@ export interface IOpenApiSchemaArgs {
     description?: string;
     url: string;
   }
+}
+
+export interface IOpenApiLink {
+  operationRef?: string;
+  operationId?: string;
+  description?: string;
+  parameters?: {
+    [param: string]: string;
+  }
+  requestBody?: any | string;
+}
+
+export interface IOpenApiLinks {
+  [linkId: string]: IOpenApiLink | {$ref: string};
 }
 
 export interface IOpenApiPathArgs {
