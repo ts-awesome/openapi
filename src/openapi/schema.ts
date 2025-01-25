@@ -30,6 +30,9 @@ export interface IOpenApiSchema {
   additionalProperties?: true | IOpenApiSchema | IOpenApiReference;
   properties?: Record<string, IOpenApiSchema | IOpenApiReference>;
   description?: string;
+  /**
+   * More information https://spec.openapis.org/registry/format/
+   */
   format?: keyof typeof OpenApiDataFormat | string;
   default?: any;
 

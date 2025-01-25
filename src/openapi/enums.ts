@@ -26,6 +26,9 @@ export const enum OpenApiOperationKind {
   trace = 'trace',
 }
 
+/**
+ * https://spec.openapis.org/registry/format/
+ */
 export const enum OpenApiDataFormat {
   int32 = 'int32',
   int64 = 'int64',
@@ -38,6 +41,27 @@ export const enum OpenApiDataFormat {
   date = 'date',
   'date-time' = 'date-time',
   password = 'password',
+  base64url = 'base64url',
+  char = 'char',
+  decimal = 'decimal',
+  decimal128 = 'decimal128',
+  'double-int' = 'double-int',
+  duration = 'duration',
+  email = 'email',
+  hostname = 'hostname',
+  html = 'html',
+  'http-date' = 'http-date',
+  'idn-email' = 'idn-email',
+  'idn-hostname' = 'idn-hostname',
+  int16 = 'int16',
+  int8 = 'int8',
+  ipv4 = 'ipv4',
+  ipv6 = 'ipv6',
+  regex = 'regex',
+  time = 'time',
+  uint8 = 'uint8',
+  uri = 'uri',
+  uuid = 'uuid',
 }
 
 export const enum OpenApiDataType {
